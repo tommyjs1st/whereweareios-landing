@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-itunes-app" content="app-id=6755068744">
+    <title>Where We Are - 그룹 참여</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .group-info {
+            background: #f7f7f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .group-info p {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .group-info h2 {
+            color: #667eea;
+            font-size: 32px;
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        .period-info {
+            color: #764ba2;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .message {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .countdown {
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        #timer {
+            color: #764ba2;
+            font-size: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .footer {
+            margin-top: 20px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .group-info h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📍</div>
+        <h1>Where We Are</h1>
+        <p class="subtitle">그룹에 초대되었습니다!</p>
+        
+        <div class="group-info">
+            <p>그룹 코드</p>
+            <h2 id="topic">...</h2>
+            <p class="period-info" id="periodInfo" style="display: none;"></p>
+        </div>
+        
+        <div class="message">
+            <p>앱을 다운로드하면 자동으로 그룹에 참여됩니다.</p>
+            <p class="countdown">App Store로 이동 중... (<span id="timer">3</span>초)</p>
+        </div>
+        
+        <button id="downloadBtn">지금 다운로드</button>
+        
+        <div class="footer">
+            © 2025 Where We Are
+        </div>
+    </div>
+
+    <script>
+        // URL 파라미터 파싱
+        const urlParams = new URLSearchParams(window.location.search);
+        const topic = urlParams.get('topic');
+        const period = urlParams.get('period');
+        
+        console.log('📱 랜딩 페이지 로드');
+        console.log('  - topic:', topic);
+        console.log('  - period:', period);
+        
+        // 그룹 코드 표시
+        if (topic) {
+            document.getElementById('topic').textContent = topic;
+            
+            // localStorage에 저장 (앱 설치 후 자동 적용)
+            try {
+                localStorage.setItem('pending_topic', topic);
+                console.log('✅ localStorage에 topic 저장:', topic);
+                
+                if (period) {
+                    localStorage.setItem('pending_period', period);
+                    console.log('✅ localStorage에 period 저장:', period);
+                    
+                    // 기간 정보 표시
+                    const periodInfo = document.getElementById('periodInfo');
+                    periodInfo.textContent = `사용 기간: ${period}일`;
+                    periodInfo.style.display = 'block';
+                }
+            } catch (e) {
+                console.error('❌ localStorage 저장 실패:', e);
+            }
+            
+            // ✅ 클립보드에 그룹 코드 복사 (앱 설치 후 수동 입력 대비)
+            try {
+                navigator.clipboard.writeText(topic).then(() => {
+                    console.log('✅ 클립보드에 그룹 코드 복사:', topic);
+                }).catch(err => {
+                    console.warn('⚠️ 클립보드 복사 실패 (권한 필요):', err);
+                });
+            } catch (e) {
+                console.warn('⚠️ 클립보드 API 지원 안 함:', e);
+            }
+        } else {
+            document.getElementById('topic').textContent = '그룹 코드 없음';
+            document.querySelector('.countdown').style.display = 'none';
+        }
+        
+        // App Store 링크
+        const appStoreUrl = 'https://apps.apple.com/app/id6755068744';
+        
+        // 카운트다운 타이머
+        let countdown = 3;
+        const timerElement = document.getElementById('timer');
+        
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            timerElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = appStoreUrl;
+            }
+        }, 1000);
+        
+        // 다운로드 버튼 클릭
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            clearInterval(countdownInterval);
+            window.location.href = appStoreUrl;
+        });
+        
+        // 페이지 이탈 방지 (사용자가 읽을 시간 확보)
+        window.addEventListener('beforeunload', (e) => {
+            // 카운트다운 중이면 경고 없음
+        });
+    </script>
+</body>
+</html>
