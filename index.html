@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-itunes-app" content="app-id=6755068744">
+    <title>Where We Are - 친구와 위치 공유</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .tagline {
+            font-size: 20px;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .feature {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: start;
+        }
+
+        .feature:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .feature-content p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 18px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 30px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .app-badge {
+            margin-top: 20px;
+        }
+
+        .app-badge img {
+            height: 50px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .tagline {
+                font-size: 18px;
+            }
+
+            .features {
+                padding: 30px 20px;
+            }
+
+            .feature {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .feature-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📍</div>
+        <h1>Where We Are</h1>
+        <p class="tagline">친구들과 실시간 위치를 공유하세요</p>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <div class="feature-content">
+                    <h3>간편한 위치 공유</h3>
+                    <p>QR 코드로 간편하게 그룹을 만들고 친구들과 위치를 공유하세요.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-content">
+                    <h3>안전한 프라이버시</h3>
+                    <p>그룹 코드를 아는 친구들과만 위치를 공유합니다.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-content">
+                    <h3>실시간 업데이트</h3>
+                    <p>친구들의 위치를 실시간으로 확인할 수 있습니다.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🌍</div>
+                <div class="feature-content">
+                    <h3>Google & Naver 지도</h3>
+                    <p>Google 지도와 네이버 지도를 모두 지원합니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://apps.apple.com/app/id6755068744" class="download-btn">
+            App Store에서 다운로드
+        </a>
+
+        <div class="app-badge">
+            <a href="https://apps.apple.com/app/id6755068744">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/ko-kr?size=250x83" alt="Download on the App Store">
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Where We Are. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 12px;">iPhone 전용 앱 | iOS 14.0 이상 필요</p>
+        </div>
+    </div>
+</body>
+</html>
