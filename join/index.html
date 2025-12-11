@@ -157,24 +157,6 @@
     </style>
 </head>
 <body>
-    <script>
-        // 플랫폼 감지
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const isAndroid = /Android/.test(navigator.userAgent);
-        
-        // App Store 링크
-        const appStoreUrl = 'https://apps.apple.com/app/id6755068744';
-        const playStoreUrl = 'https://play.google.com/store/apps/details?id=kr.co.musi.whereweare';
-        
-        // 플랫폼별 자동 이동
-        const storeUrl = isIOS ? appStoreUrl : isAndroid ? playStoreUrl : appStoreUrl;
-        
-        // 3초 후 자동 이동
-        setTimeout(() => {
-            window.location.href = storeUrl;
-        }, 3000);
-    </script>
-    
     <div class="container">
         <div class="icon">📍</div>
         <h1>Where We Are</h1>
@@ -245,8 +227,22 @@
             document.querySelector('.countdown').style.display = 'none';
         }
         
-        // App Store 링크
+        // ⭐ 플랫폼 감지
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
+        
+        console.log('📱 플랫폼 감지:');
+        console.log('  - iOS:', isIOS);
+        console.log('  - Android:', isAndroid);
+        
+        // ⭐ 플랫폼별 스토어 링크
         const appStoreUrl = 'https://apps.apple.com/app/id6755068744';
+        const playStoreUrl = 'https://play.google.com/store/apps/details?id=kr.co.musi.whereweare';
+        
+        // ⭐ 자동 선택 (기본값: App Store)
+        const storeUrl = isIOS ? appStoreUrl : isAndroid ? playStoreUrl : appStoreUrl;
+        
+        console.log('✅ 이동할 스토어:', storeUrl);
         
         // 카운트다운 타이머
         let countdown = 3;
@@ -258,14 +254,14 @@
             
             if (countdown <= 0) {
                 clearInterval(countdownInterval);
-                window.location.href = appStoreUrl;
+                window.location.href = storeUrl; // ⭐ 변경됨
             }
         }, 1000);
         
         // 다운로드 버튼 클릭
         document.getElementById('downloadBtn').addEventListener('click', () => {
             clearInterval(countdownInterval);
-            window.location.href = appStoreUrl;
+            window.location.href = storeUrl; // ⭐ 변경됨
         });
         
         // 페이지 이탈 방지 (사용자가 읽을 시간 확보)
