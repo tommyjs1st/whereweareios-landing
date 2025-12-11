@@ -157,6 +157,24 @@
     </style>
 </head>
 <body>
+    <script>
+        // 플랫폼 감지
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
+        
+        // App Store 링크
+        const appStoreUrl = 'https://apps.apple.com/app/id6755068744';
+        const playStoreUrl = 'https://play.google.com/store/apps/details?id=kr.co.musi.whereweare';
+        
+        // 플랫폼별 자동 이동
+        const storeUrl = isIOS ? appStoreUrl : isAndroid ? playStoreUrl : appStoreUrl;
+        
+        // 3초 후 자동 이동
+        setTimeout(() => {
+            window.location.href = storeUrl;
+        }, 3000);
+    </script>
+    
     <div class="container">
         <div class="icon">📍</div>
         <h1>Where We Are</h1>
