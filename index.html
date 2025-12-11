@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-itunes-app" content="app-id=6755068744">
-    <title>Where We Are - 친구와 위치 공유</title>
+    <!-- ⭐ Smart App Banner - 앱 설치 시 상단에 "열기" 버튼 표시 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Where We Are - 그룹 참여</title>
     <style>
         * {
             margin: 0;
@@ -16,190 +18,276 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             text-align: center;
+            animation: slideUp 0.5s ease-out;
         }
 
-        .logo {
-            font-size: 80px;
-            margin-bottom: 30px;
-            animation: float 3s ease-in-out infinite;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        @keyframes float {
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-10px); }
         }
 
         h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
-        .tagline {
-            font-size: 20px;
-            margin-bottom: 50px;
-            opacity: 0.9;
-        }
-
-        .features {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px 30px;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-
-        .feature {
+        .subtitle {
+            color: #666;
+            font-size: 16px;
             margin-bottom: 30px;
-            display: flex;
-            align-items: start;
         }
 
-        .feature:last-child {
-            margin-bottom: 0;
+        .group-info {
+            background: #f7f7f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
         }
 
-        .feature-icon {
-            font-size: 32px;
-            margin-right: 20px;
-            flex-shrink: 0;
-        }
-
-        .feature-content h3 {
-            font-size: 20px;
+        .group-info p {
+            color: #999;
+            font-size: 14px;
             margin-bottom: 8px;
         }
 
-        .feature-content p {
-            opacity: 0.9;
-            line-height: 1.6;
+        .group-info h2 {
+            color: #667eea;
+            font-size: 32px;
+            font-weight: bold;
+            word-break: break-all;
         }
 
-        .download-btn {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 18px 50px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 30px;
-            text-decoration: none;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
+        .period-info {
+            color: #764ba2;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .message {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
             margin-bottom: 30px;
         }
 
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        .countdown {
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 16px;
         }
 
-        .download-btn:active {
-            transform: translateY(-1px);
+        #timer {
+            color: #764ba2;
+            font-size: 20px;
         }
 
-        .app-badge {
-            margin-top: 20px;
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .app-badge img {
-            height: 50px;
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .footer {
-            margin-top: 60px;
-            opacity: 0.7;
-            font-size: 14px;
+            margin-top: 20px;
+            color: #999;
+            font-size: 12px;
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 36px;
-            }
-
-            .tagline {
-                font-size: 18px;
-            }
-
-            .features {
+        @media (max-width: 480px) {
+            .container {
                 padding: 30px 20px;
             }
-
-            .feature {
-                flex-direction: column;
-                text-align: center;
+            
+            h1 {
+                font-size: 24px;
             }
-
-            .feature-icon {
-                margin-right: 0;
-                margin-bottom: 10px;
+            
+            .group-info h2 {
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">📍</div>
+        <div class="icon">📍</div>
         <h1>Where We Are</h1>
-        <p class="tagline">친구들과 실시간 위치를 공유하세요</p>
-
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🚀</div>
-                <div class="feature-content">
-                    <h3>간편한 위치 공유</h3>
-                    <p>QR 코드로 간편하게 그룹을 만들고 친구들과 위치를 공유하세요.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">🔐</div>
-                <div class="feature-content">
-                    <h3>안전한 프라이버시</h3>
-                    <p>그룹 코드를 아는 친구들과만 위치를 공유합니다.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <div class="feature-content">
-                    <h3>실시간 업데이트</h3>
-                    <p>친구들의 위치를 실시간으로 확인할 수 있습니다.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">🌍</div>
-                <div class="feature-content">
-                    <h3>Google & Naver 지도</h3>
-                    <p>Google 지도와 네이버 지도를 모두 지원합니다.</p>
-                </div>
-            </div>
+        <p class="subtitle">그룹에 초대되었습니다!</p>
+        
+        <div class="group-info">
+            <p>그룹 코드</p>
+            <h2 id="topic">...</h2>
+            <p class="period-info" id="periodInfo" style="display: none;"></p>
         </div>
-
-        <a href="https://apps.apple.com/app/id6755068744" class="download-btn">
-            App Store에서 다운로드
-        </a>
-
-        <div class="app-badge">
-            <a href="https://apps.apple.com/app/id6755068744">
-                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/ko-kr?size=250x83" alt="Download on the App Store">
-            </a>
+        
+        <div class="message">
+            <p>앱을 다운로드하면 자동으로 그룹에 참여됩니다.</p>
+            <p class="countdown">App Store로 이동 중... (<span id="timer">3</span>초)</p>
         </div>
-
+        
+        <button id="downloadBtn">지금 다운로드</button>
+        
         <div class="footer">
-            <p>© 2025 Where We Are. All rights reserved.</p>
-            <p style="margin-top: 10px; font-size: 12px;">iPhone 전용 앱 | iOS 14.0 이상 필요</p>
+            © 2025 Where We Are
         </div>
     </div>
+
+    <script>
+        // URL 파라미터 파싱
+        const urlParams = new URLSearchParams(window.location.search);
+        const topic = urlParams.get('topic');
+        const period = urlParams.get('period');
+        
+        console.log('📱 랜딩 페이지 로드');
+        console.log('  - topic:', topic);
+        console.log('  - period:', period);
+        
+        // ⭐ 앱 설치 여부 확인 및 즉시 열기 시도
+        let appOpened = false;
+        if (topic) {
+            const appUrl = `https://whereweare.musi.co.kr/join?topic=${encodeURIComponent(topic)}${period ? '&period=' + period : ''}`;
+            console.log('🔗 앱 열기 시도:', appUrl);
+            
+            // 즉시 앱 열기 시도
+            const startTime = Date.now();
+            window.location.href = appUrl;
+            
+            // 2초 후 앱이 안 열렸으면 (페이지가 여전히 활성) App Store로 이동
+            setTimeout(() => {
+                if (Date.now() - startTime < 2500) {
+                    console.log('⚠️ 앱이 설치되지 않은 것 같습니다. 웹 페이지 표시.');
+                }
+            }, 2000);
+        }
+        
+        // 그룹 코드 표시
+        if (topic) {
+            document.getElementById('topic').textContent = topic;
+            
+            // localStorage에 저장 (앱 설치 후 자동 적용)
+            try {
+                localStorage.setItem('pending_topic', topic);
+                console.log('✅ localStorage에 topic 저장:', topic);
+                
+                if (period) {
+                    localStorage.setItem('pending_period', period);
+                    console.log('✅ localStorage에 period 저장:', period);
+                    
+                    // 기간 정보 표시
+                    const periodInfo = document.getElementById('periodInfo');
+                    periodInfo.textContent = `사용 기간: ${period}일`;
+                    periodInfo.style.display = 'block';
+                }
+            } catch (e) {
+                console.error('❌ localStorage 저장 실패:', e);
+            }
+            
+            // ✅ 클립보드에 그룹 코드 복사 (앱 설치 후 수동 입력 대비)
+            try {
+                navigator.clipboard.writeText(topic).then(() => {
+                    console.log('✅ 클립보드에 그룹 코드 복사:', topic);
+                }).catch(err => {
+                    console.warn('⚠️ 클립보드 복사 실패 (권한 필요):', err);
+                });
+            } catch (e) {
+                console.warn('⚠️ 클립보드 API 지원 안 함:', e);
+            }
+        } else {
+            document.getElementById('topic').textContent = '그룹 코드 없음';
+            document.querySelector('.countdown').style.display = 'none';
+        }
+        
+        // ⭐ 플랫폼 감지
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isAndroid = /Android/.test(navigator.userAgent);
+        
+        console.log('📱 플랫폼 감지:');
+        console.log('  - iOS:', isIOS);
+        console.log('  - Android:', isAndroid);
+        
+        // ⭐ 플랫폼별 스토어 링크
+        const appStoreUrl = 'https://apps.apple.com/app/id6755068744';
+        const playStoreUrl = 'https://play.google.com/store/apps/details?id=kr.co.musi.whereweare';
+        
+        // ⭐ 자동 선택 (기본값: App Store)
+        const storeUrl = isIOS ? appStoreUrl : isAndroid ? playStoreUrl : appStoreUrl;
+        
+        console.log('✅ 이동할 스토어:', storeUrl);
+        
+        // 카운트다운 타이머
+        let countdown = 3;
+        const timerElement = document.getElementById('timer');
+        
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            timerElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = storeUrl; // ⭐ 변경됨
+            }
+        }, 1000);
+        
+        // 다운로드 버튼 클릭
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            clearInterval(countdownInterval);
+            window.location.href = storeUrl; // ⭐ 변경됨
+        });
+        
+        // 페이지 이탈 방지 (사용자가 읽을 시간 확보)
+        window.addEventListener('beforeunload', (e) => {
+            // 카운트다운 중이면 경고 없음
+        });
+    </script>
 </body>
 </html>
