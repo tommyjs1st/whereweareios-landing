@@ -192,29 +192,31 @@
         console.log('  - topic:', topic);
         console.log('  - period:', period);
         
-        // ⭐ 앱 설치 여부 확인 및 즉시 열기 시도
-        let appOpened = false;
-        if (topic) {
-            const appUrl = `https://whereweare.musi.co.kr/join?topic=${encodeURIComponent(topic)}${period ? '&period=' + period : ''}`;
-            console.log('🔗 앱 열기 시도:', appUrl);
-            
-            // 즉시 앱 열기 시도
-            const startTime = Date.now();
-            window.location.href = appUrl;
-            
-            // 2초 후 앱이 안 열렸으면 (페이지가 여전히 활성) App Store로 이동
-            setTimeout(() => {
-                if (Date.now() - startTime < 2500) {
-                    console.log('⚠️ 앱이 설치되지 않은 것 같습니다. 웹 페이지 표시.');
-                }
-            }, 2000);
-        }
+        // ⭐ 플랫폼 감지 (대소문자 무시)
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isIOS = /ipad|iphone|ipod/.test(userAgent);
+        const isAndroid = /android/.test(userAgent);
+        
+        console.log('📱 플랫폼 감지:');
+        console.log('  - User Agent:', navigator.userAgent);
+        console.log('  - iOS:', isIOS);
+        console.log('  - Android:', isAndroid);
+        
+        // ⭐ 플랫폼별 스토어 링크
+        const appStoreUrl = 'https://apps.apple.com/app/id6755068744';
+        const playStoreUrl = 'https://play.google.com/store/apps/details?id=kr.co.musi.whereweare';
+        
+        // ⭐ 스토어 URL 선택
+        const storeUrl = isAndroid ? playStoreUrl : appStoreUrl;
+        
+        console.log('✅ 선택된 스토어:', isAndroid ? 'Play Store' : 'App Store');
+        console.log('✅ 스토어 URL:', storeUrl);
         
         // 그룹 코드 표시
         if (topic) {
             document.getElementById('topic').textContent = topic;
             
-            // localStorage에 저장 (앱 설치 후 자동 적용)
+            // localStorage에 저장
             try {
                 localStorage.setItem('pending_topic', topic);
                 console.log('✅ localStorage에 topic 저장:', topic);
@@ -223,7 +225,6 @@
                     localStorage.setItem('pending_period', period);
                     console.log('✅ localStorage에 period 저장:', period);
                     
-                    // 기간 정보 표시
                     const periodInfo = document.getElementById('periodInfo');
                     periodInfo.textContent = `사용 기간: ${period}일`;
                     periodInfo.style.display = 'block';
@@ -232,37 +233,36 @@
                 console.error('❌ localStorage 저장 실패:', e);
             }
             
-            // ✅ 클립보드에 그룹 코드 복사 (앱 설치 후 수동 입력 대비)
+            // 클립보드에 복사
             try {
                 navigator.clipboard.writeText(topic).then(() => {
                     console.log('✅ 클립보드에 그룹 코드 복사:', topic);
                 }).catch(err => {
-                    console.warn('⚠️ 클립보드 복사 실패 (권한 필요):', err);
+                    console.warn('⚠️ 클립보드 복사 실패:', err);
                 });
             } catch (e) {
                 console.warn('⚠️ 클립보드 API 지원 안 함:', e);
             }
+            
+            // ⭐ 앱이 설치된 경우 열기 시도
+            const appUrl = `https://whereweare.musi.co.kr/join?topic=${encodeURIComponent(topic)}${period ? '&period=' + period : ''}`;
+            console.log('🔗 앱 열기 시도:', appUrl);
+            
+            // iframe으로 앱 열기 시도 (더 안전함)
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = appUrl;
+            document.body.appendChild(iframe);
+            
+            // 1.5초 후 iframe 제거
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 1500);
+            
         } else {
             document.getElementById('topic').textContent = '그룹 코드 없음';
             document.querySelector('.countdown').style.display = 'none';
         }
-        
-        // ⭐ 플랫폼 감지
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const isAndroid = /Android/.test(navigator.userAgent);
-        
-        console.log('📱 플랫폼 감지:');
-        console.log('  - iOS:', isIOS);
-        console.log('  - Android:', isAndroid);
-        
-        // ⭐ 플랫폼별 스토어 링크
-        const appStoreUrl = 'https://apps.apple.com/app/id6755068744';
-        const playStoreUrl = 'https://play.google.com/store/apps/details?id=kr.co.musi.whereweare';
-        
-        // ⭐ 자동 선택 (기본값: App Store)
-        const storeUrl = isIOS ? appStoreUrl : isAndroid ? playStoreUrl : appStoreUrl;
-        
-        console.log('✅ 이동할 스토어:', storeUrl);
         
         // 카운트다운 타이머
         let countdown = 3;
@@ -274,14 +274,16 @@
             
             if (countdown <= 0) {
                 clearInterval(countdownInterval);
-                window.location.href = storeUrl; // ⭐ 변경됨
+                console.log('⏰ 카운트다운 종료, 스토어 이동:', storeUrl);
+                window.location.href = storeUrl;
             }
         }, 1000);
         
         // 다운로드 버튼 클릭
         document.getElementById('downloadBtn').addEventListener('click', () => {
             clearInterval(countdownInterval);
-            window.location.href = storeUrl; // ⭐ 변경됨
+            console.log('🔘 버튼 클릭, 스토어 이동:', storeUrl);
+            window.location.href = storeUrl;
         });
         
         // 페이지 이탈 방지 (사용자가 읽을 시간 확보)
